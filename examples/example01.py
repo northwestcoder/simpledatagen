@@ -19,7 +19,7 @@ time_between_dates = birthday_end_date - birthday_start_date
 birthday_days_between_dates = time_between_dates.days
 
 
-def createData(headers: bool, rows: int) -> str:
+def createData(headers: bool, rows: int, transactions: bool) -> str:
 
 	listOfNewRows = ""
 
@@ -85,5 +85,5 @@ def createData(headers: bool, rows: int) -> str:
 	return listOfNewRows
 
 
-#test = createData(1000)
+#test = createData(true, 1000, false)
 #print(test)

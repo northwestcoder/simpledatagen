@@ -2,15 +2,15 @@ import time
 
 import example01
 
-t0 = time.time()
+# let's use a low tech timer to see how long the data gen takes
+t_start = time.time()
 
-test = example01.createData(headers=True, rows=50000)
+test = example01.createData(headers=True, rows=50000, transactions=False)
 
 with open('output.csv', 'w') as f:
 	f.write(test)
 	print("finished")
 
-t1 = time.time()
-
-totaltime = t1-t0
+t_end = time.time()
+totaltime = t_end-t_start
 print(str(totaltime) + " seconds")

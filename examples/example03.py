@@ -12,7 +12,7 @@
 # it will then say
 # "Running on http://127.0.0.1:5000/"
 # 
-# and if you go to http://127.0.0.1:5000/payload
+# and if you go to http://127.0.0.1:5000/randompayload
 # you should see 1,000 lines of randomly generated data
 #
 # each time you refresh the page the data will be rebuilt :) 
@@ -24,8 +24,18 @@ import example01
 
 app = Flask(__name__)
 
-@app.route('/payload')
-def hello_world():
 
-	payload = example01.createData(headers=True, rows=1000)
+staticdata = example01.createData(headers=True, rows=1000, transactions=False)
+
+@app.route('/randompayload')
+def randompayload():
+
+	payload = example01.createData(headers=True, rows=1000, transactions=False)
 	return payload
+
+
+# this one uses a var created outside of the route, so it will remain stable for the lifetime of the flask invocation
+@app.route('/staticpayload')
+def staticpayload():
+
+	return staticdata
