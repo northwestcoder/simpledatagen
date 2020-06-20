@@ -11,4 +11,4 @@ For instance, in example02.py we call into example01 and specify a row count and
 
 ## example03.py
 
-Using flask (you will need to _pip install flask_ in your python environment), we create a simple endpoint "/payload" which will autogenerate 1,000 lines of fake data by calling example01.
+Using flask (you will need to _pip install flask_ in your python environment), we create a simple endpoint "/payload" which will autogenerate 1,000 lines of fake data by calling example01. each page refresh will recall the data gen.
