@@ -8,3 +8,7 @@ This happy little guy was an experiment in not using pandas, and not even using 
 ## example02.py
 
 For instance, in example02.py we call into example01 and specify a row count and headers. You can start to imagine interating for all kinds of performance reasons, and not wanting the headers on the 2nd or Nth call.
+
+## example03.py
+
+Using flask (you will need to _pip install flask_ in your python environment), we create a simple endpoint "/payload" which will autogenerate 1,000 lines of fake data by calling example01.
