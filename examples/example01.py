@@ -19,18 +19,19 @@ time_between_dates = birthday_end_date - birthday_start_date
 birthday_days_between_dates = time_between_dates.days
 
 
-def createData(maxrows: int) -> str:
+def createData(headers: bool, rows: int) -> str:
 
 	listOfNewRows = ""
 
-	for idx, item in enumerate(DataColumns):
-		listOfNewRows+=quote + item + quote
-		if idx+1 != len(DataColumns):
-			listOfNewRows+=","
-	listOfNewRows+="\n"		
+	if headers:
+		for idx, item in enumerate(DataColumns):
+			listOfNewRows+=quote + item + quote
+			if idx+1 != len(DataColumns):
+				listOfNewRows+=","
+		listOfNewRows+="\n"		
 
 	rowcount = 0
-	for newrow in range(maxrows):
+	for newrow in range(rows):
 		
 		#our temp row array for append
 		newrow = ""
@@ -75,7 +76,7 @@ def createData(maxrows: int) -> str:
 		newrow+= quote + (random.choice(helpers.df_jobs)) + quotecomma
 		newrow+= quote + (random.choice(helpers.df_phones)) + quote
 		
-		if rowcount != maxrows:			
+		if rowcount != rows:			
 			newrow+=("\n")
 		listOfNewRows+=newrow
 		
@@ -84,6 +85,5 @@ def createData(maxrows: int) -> str:
 	return listOfNewRows
 
 
-test = createData(1000)
-
-print(test)
+#test = createData(1000)
+#print(test)
