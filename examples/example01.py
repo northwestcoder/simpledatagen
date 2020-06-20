@@ -1,8 +1,7 @@
 import numpy as np
 import random
-from io import BytesIO, StringIO
 import datetime 
-from datetime import timedelta
+
 import helpers
 
 
@@ -14,17 +13,13 @@ DataColumns = ['customer_id','name_prefix','name_first','name_last','gender','em
 quote = "\""
 quotecomma = "\","
 
-
-birthday_start_date = datetime.date.today() - timedelta(days=27300)
-birthday_end_date = datetime.date.today() - timedelta(days=5096)
+birthday_start_date = datetime.date.today() - datetime.timedelta(days=27300)
+birthday_end_date = datetime.date.today() - datetime.timedelta(days=5096)
 time_between_dates = birthday_end_date - birthday_start_date
 birthday_days_between_dates = time_between_dates.days
 
 
-def createData(maxrows: int, output: str) -> str:
-
-	io_output = StringIO()
-
+def createData(maxrows: int) -> str:
 
 	listOfNewRows = ""
 
@@ -36,11 +31,14 @@ def createData(maxrows: int, output: str) -> str:
 
 	rowcount = 0
 	for newrow in range(maxrows):
+		
 		#our temp row array for append
 		newrow = ""
 		newrow+= quote + (helpers.id_generator()) + quotecomma
+		
 		tempEmployer = random.choice(helpers.df_companies)
 		# some squirrel to create gender based names
+		
 		if helpers.randomlySelected(6, 11):  # construct female name slightly more often (54% of the time)
 			tempFirstName = random.choice(helpers.df_firstnames_female)
 			tempLastName = random.choice(helpers.df_lastnames)
@@ -55,12 +53,16 @@ def createData(maxrows: int, output: str) -> str:
 			newrow+= quote + (tempFirstName) + quotecomma
 			newrow+= quote + (tempLastName) + quotecomma
 			newrow+= quote + ("M") + ","
+		
 		tempEmail = helpers.genEmail(tempFirstName, tempLastName, tempEmployer)
+		
 		newrow+= quote + (tempEmail) + quotecomma
 		newrow+= quote + (random.choice(helpers.df_account_types)) + quotecomma
 		newrow+= quote + (str(random.randint(100,9999)) + " " + random.choice(helpers.df_streetnames)) + quotecomma
+
 		tempCityStateCombo = random.choice(helpers.df_us_cities_states_counties).split(',')
 		whichStateType = np.random.randint(2)
+		
 		newrow+= quote + (tempCityStateCombo[0]) + quotecomma
 		newrow+= quote + (tempCityStateCombo[whichStateType+1]) + quotecomma
 
@@ -72,14 +74,16 @@ def createData(maxrows: int, output: str) -> str:
 		newrow+= quote + (tempEmployer) + quotecomma
 		newrow+= quote + (random.choice(helpers.df_jobs)) + quotecomma
 		newrow+= quote + (random.choice(helpers.df_phones)) + quote
+		
 		if rowcount != maxrows:			
 			newrow+=("\n")
 		listOfNewRows+=newrow
+		
 		rowcount+=1
 
 	return listOfNewRows
 
 
-test = createData(10000, "csv")
+test = createData(1000)
 
 print(test)
