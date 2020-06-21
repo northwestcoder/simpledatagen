@@ -1,13 +1,11 @@
-
-import numpy as np
 import random
 import datetime 
-
 import core
 import helpers
 
 quote = "\""
 quotecomma = "\","
+comma = ","
 newline = "\n"
 
 transColumnData = [
@@ -25,9 +23,7 @@ time_between_dates = trans_end_date - trans_start_date
 trans_days_between_dates = time_between_dates.days
 
 
-
 def generateTransactions(customerid: str, maxtrans: int):
-
 
 	rowcount = 0
 	transactions = ""
@@ -43,11 +39,11 @@ def generateTransactions(customerid: str, maxtrans: int):
 		random_number_of_days = random.randrange(trans_days_between_dates)
 		random_date = trans_start_date + datetime.timedelta(days=random_number_of_days)		
 		newrow += quote + str(random_date) + quotecomma
-
 		newrow += quote + str(transtotal) + quotecomma
 		newrow += quote + str(numitems) + quotecomma		
 
 		prodcode = random.randint(700000000,900000000)
+
 		newrow += quote + str(prodcode) + quotecomma		
 		newrow += quote + ("PR" + str(prodcode)[:3]) + quote	
 
@@ -55,11 +51,8 @@ def generateTransactions(customerid: str, maxtrans: int):
 			newrow += newline
 
 		transactions += newrow
-
 		rowcount+=1
 
 	return(transactions)
-
-
 
 #print(generateTransactions("test",5))

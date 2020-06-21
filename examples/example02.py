@@ -1,5 +1,4 @@
 import time
-
 import example01
 
 # let's use a low tech timer to see how long the data gen takes
@@ -16,4 +15,4 @@ totaltime = t_end-t_start
 print(str(totaltime) + " seconds")
 
 
-print(test)
+#print(test)

@@ -18,7 +18,6 @@ ExtraDataColumns = [
 ]
 
 
-
 def createData(headers: bool, rows: int, buildtransactions: bool, *args) -> str:
 
 	listOfNewRows = ""

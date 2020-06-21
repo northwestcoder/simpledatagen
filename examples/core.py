@@ -1,8 +1,6 @@
-import numpy as np
 import random
 import datetime 
 import string
-import random
 import os
 
 # does two things: 1. creates an identity bundle, 2. creates a geolocation bundle
@@ -22,7 +20,6 @@ CoreDataColumns = [
 'postal_code',
 'birth_dt'
 ]
-
 
 
 handlers = {
@@ -46,7 +43,7 @@ for filename in os.listdir("inputs"):
 
 def randomlySelected(chanceof, range):
 	# e.g. if 6 out of 13 chance odds
-	if np.random.randint(range) < chanceof:
+	if random.randrange(range) < chanceof:
 		return True
 	else:
 		return False
@@ -138,4 +135,6 @@ def handlerMap(type):
 #test3 = handlerMap("geolocation_bundle")
 #print(test3)
 
+#test = randomlySelected(6, 13)
+#print(test)
 
