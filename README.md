@@ -2,11 +2,11 @@
 
 Inputs for random data are in the 'inputs' dir. Some examples/exampleNN.py files have commented tests at the bottom, e.g. uncomment and run "python example04.py"
 
-## [example01.py](https://github.com/northwestcoder/simpledatagen/blob/master/buildcsv_people.py)
+## [buildcsv_people.py](https://github.com/northwestcoder/simpledatagen/blob/master/buildcsv_people.py)
 
 This happy little guy was an experiment in not using pandas, and not even using csv readers and writers. It generates a CSV formatted string, and just returns that string. It's up to the caller to specify how much data, as well as whether or not to use the column headers.
 
-If you dig in, you'll see that we have two types of data: "core" data and "extra" data. The core info is related to Identity and Geolocation. The "Extra" data is defined in helpers.py - in this example01 we then merge this into a CSV output. 
+If you dig in, you'll see that we have two types of data: "core" data and "extra" data. The core info is related to Identity and Geolocation. The "Extra" data is defined in helpers.py - in this buildcsv_people example we then merge this into a single CSV string output as an array with two elements: the people element and the transactions element. 
 
 ## [example02.py](https://github.com/northwestcoder/simpledatagen/blob/master/example02.py)
 
