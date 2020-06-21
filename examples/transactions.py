@@ -2,6 +2,8 @@
 import numpy as np
 import random
 import datetime 
+
+import core
 import helpers
 
 quote = "\""
@@ -36,7 +38,7 @@ def generateTransactions(customerid: str, maxtrans: int):
 		numitems = random.randint(1,15)
 
 		newrow += quote + customerid + quotecomma
-		newrow += quote + helpers.id_generator() + quotecomma
+		newrow += quote + core.coreNextCustomerID() + quotecomma
 
 		random_number_of_days = random.randrange(trans_days_between_dates)
 		random_date = trans_start_date + datetime.timedelta(days=random_number_of_days)		

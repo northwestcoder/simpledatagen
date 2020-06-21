@@ -14,3 +14,6 @@ with open('output.csv', 'w') as f:
 t_end = time.time()
 totaltime = t_end-t_start
 print(str(totaltime) + " seconds")
+
+
+print(test)

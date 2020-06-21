@@ -1,109 +1,74 @@
-import numpy as np
-import random
-import datetime 
-
+import core
 import helpers
 import transactions
 
-DataColumns = [
-'customer_id',
-'name_prefix',
-'name_first',
-'name_last',
-'gender',
-'email',
-'account_status',
-'addr_ln_1_txt',
-'city',
-'state',
-'postal_code',
-'birth_dt',
-'employment',
-'job_title',
-'phone']
 
-## Do not recommend changing anything below this line?? maybe?
+quote = 		"\""
+quotecomma = 	"\","
+comma = 		","
+newline = 		"\n"
 
-quote = "\""
-quotecomma = "\","
-newline = "\n"
+# if you append new columns, you need to ensure you have defined a handler for these in helpers.py
+# we have provided a few as examples
 
-birthday_start_date = datetime.date.today() - datetime.timedelta(days=27300)
-birthday_end_date = datetime.date.today() - datetime.timedelta(days=5096)
-time_between_dates = birthday_end_date - birthday_start_date
-birthday_days_between_dates = time_between_dates.days
+ExtraDataColumns = [ 
+"job_type",
+"account_type",
+"phone_number"
+]
+
 
 
 def createData(headers: bool, rows: int, buildtransactions: bool, *args) -> str:
 
-
-
 	listOfNewRows = ""
 	listOfNewTransactions = ""
 
+	# if asked for headers, first we print out the core headers, followed by the extra ones
 	if headers:
-		for idx, item in enumerate(DataColumns):
-			listOfNewRows+=quote + item + quote
-			if idx+1 != len(DataColumns):
-				listOfNewRows+=","
-		listOfNewRows+="\n"
+		for idx, item in enumerate(core.CoreDataColumns):
+			listOfNewRows += quote + item + quote
+			if idx+1 != len(core.CoreDataColumns):
+				listOfNewRows += comma
+	
+		if len(ExtraDataColumns) > 0:
+			listOfNewRows += comma
+		for idx, item in enumerate(ExtraDataColumns):
+			listOfNewRows +=quote + item + quote
+			if idx+1 != len(ExtraDataColumns):
+				listOfNewRows += comma
 
+		listOfNewRows += newline
 
+	# if asked for transactions (child records) we print out their headers
 	if buildtransactions:
 		for idx, item in enumerate(transactions.transColumnData):
 			listOfNewTransactions += quote + item + quote
 			if idx+1 != len(transactions.transColumnData):
-				listOfNewTransactions += ","
-		listOfNewTransactions += "\n"		
+				listOfNewTransactions += comma
+		listOfNewTransactions += newline		
 
+	# start of main iter
 	rowcount = 0
 	for newrow in range(rows):
-		
-		#our temp row array for append
-		newid = helpers.id_generator()
 		newrow = ""
-		newrow+= quote + newid + quotecomma
-		
-		tempEmployer = random.choice(helpers.df_companies)
-		# some squirrel to create gender based names
-		
-		if helpers.randomlySelected(6, 11):  # construct female name slightly more often (54% of the time)
-			tempFirstName = random.choice(helpers.df_firstnames_female)
-			tempLastName = random.choice(helpers.df_lastnames)
-			newrow+= quote + (random.choice(helpers.df_prefix_female)) + quotecomma
-			newrow+= quote + (tempFirstName) + quotecomma
-			newrow+=( quote + tempLastName) + quotecomma
-			newrow+= quote + ("F") + "," + quotecomma
-		else:
-			tempFirstName = random.choice(helpers.df_firstnames_male) + str(random.randint(100,999)-1)
-			tempLastName = random.choice(helpers.df_lastnames) + str(random.randint(100,999)-1)
-			newrow+= quote + (random.choice(helpers.df_prefix_male)) + quotecomma
-			newrow+= quote + (tempFirstName) + quotecomma
-			newrow+= quote + (tempLastName) + quotecomma
-			newrow+= quote + ("M") + "," + quotecomma
-		
-		tempEmail = helpers.genEmail(tempFirstName, tempLastName, tempEmployer)
-		
-		newrow+= quote + (tempEmail) + quotecomma
-		newrow+= quote + (random.choice(helpers.df_account_types)) + quotecomma
-		newrow+= quote + (str(random.randint(100,9999)) + " " + random.choice(helpers.df_streetnames)) + quotecomma
+		identity_bundle = core.handlerMap("identity_bundle")
+		geolocation_bundle = core.handlerMap("geolocation_bundle")
+		newid = core.handlerMap("customer_id")
+		birthdate = str(core.handlerMap("birth_dt"))
 
-		tempCityStateCombo = random.choice(helpers.df_us_cities_states_counties).split(',')
-		whichStateType = np.random.randint(2)
-		
-		newrow+= quote + (tempCityStateCombo[0]) + quotecomma
-		newrow+= quote + (tempCityStateCombo[whichStateType+1]) + quotecomma
+		newrow+= quote + newid + quotecomma								# 1 the ID
+		for item in range(len(identity_bundle)):						# 2 the identity info
+			newrow+= quote + identity_bundle[item] + quotecomma
+		for item in range(len(geolocation_bundle)):						# 3 the geo info
+			newrow+= quote + geolocation_bundle[item] + quotecomma
+		newrow+= quote + birthdate + quotecomma							# 4 birthdate
 
-		newrow+= quote + (random.choice(helpers.df_postalcodes)) + quotecomma
-		random_number_of_days = random.randrange(birthday_days_between_dates)
-		random_date = birthday_start_date + datetime.timedelta(days=random_number_of_days)		
-		newrow+= quote + str(random_date) + quotecomma
-
-		newrow+= quote + (tempEmployer) + quotecomma
-		newrow+= quote + (random.choice(helpers.df_jobs)) + quotecomma
-		newrow+= quote + (random.choice(helpers.df_phones)) + quote
-		
-		if rowcount != rows:			
+		for idx, item in enumerate(ExtraDataColumns):					# 5 extra columns
+			newrow += quote + helpers.extraHandlerMap(item) + quote
+			newrow += comma if idx+1 != len(ExtraDataColumns) else ""
+			
+		if rowcount != rows:											#6 newline			
 			newrow+= newline
 		
 		listOfNewRows+= newrow
@@ -113,19 +78,13 @@ def createData(headers: bool, rows: int, buildtransactions: bool, *args) -> str:
 			maxrows = int(args[0])
 			listOfNewTransactions += transactions.generateTransactions(newid, maxrows)
 
-
-
 		rowcount+=1
 
 	return listOfNewRows, listOfNewTransactions
 
 
+# uncomment to test:
 
-
-#test = createData(True, 10, True, 422)
-
-# some customers
-#print(test[1])
-
-# and their transactions
+#test = createData(True, 10, True, 2)
+#print(test[0])
 #print(test[1])
