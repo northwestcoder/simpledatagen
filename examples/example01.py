@@ -3,10 +3,10 @@ import helpers
 import transactions
 
 
-quote = 		"\""
-quotecomma = 	"\","
-comma = 		","
-newline = 		"\n"
+quote				= "\""
+quotecomma			= "\","
+comma				= ","
+newline				= "\n"
 
 # if you append new columns, you need to ensure you have defined a handler for these in helpers.py
 # we have provided a few as examples
@@ -56,18 +56,24 @@ def createData(headers: bool, rows: int, buildtransactions: bool, *args) -> str:
 		newid = core.handlerMap("customer_id")
 		birthdate = str(core.handlerMap("birth_dt"))
 
-		newrow+= quote + newid + quotecomma								# 1 the ID
-		for item in range(len(identity_bundle)):						# 2 the identity info
+		# 1 the ID
+		newrow+= quote + newid + quotecomma								
+		# 2 the identity info
+		for item in range(len(identity_bundle)):						
 			newrow+= quote + identity_bundle[item] + quotecomma
-		for item in range(len(geolocation_bundle)):						# 3 the geo info
+		# 3 the geo info
+		for item in range(len(geolocation_bundle)):						
 			newrow+= quote + geolocation_bundle[item] + quotecomma
-		newrow+= quote + birthdate + quotecomma							# 4 birthdate
+		# 4 birthdate
+		newrow+= quote + birthdate + quotecomma							
 
-		for idx, item in enumerate(ExtraDataColumns):					# 5 extra columns
+		# 5 extra columns you have defined
+		for idx, item in enumerate(ExtraDataColumns):					
 			newrow += quote + helpers.extraHandlerMap(item) + quote
 			newrow += comma if idx+1 != len(ExtraDataColumns) else ""
 			
-		if rowcount != rows:											#6 newline			
+		#6 newline if not last line
+		if rowcount != rows:														
 			newrow+= newline
 		
 		listOfNewRows+= newrow

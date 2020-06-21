@@ -24,9 +24,9 @@ import example01
 
 app = Flask(__name__)
 
-
 staticdata = example01.createData(headers=True, rows=1000, buildtransactions=False)
 
+# this next route generates a var each time the route is called
 @app.route('/randompayload')
 def randompayload():
 
@@ -34,7 +34,8 @@ def randompayload():
 	return payload
 
 
-# this one uses a var created outside of the route, so it will remain stable for the lifetime of the flask invocation
+# this one uses 'staticdata' created outside of the route, 
+# so it will remain stable for the lifetime of the flask invocation
 @app.route('/staticpayload')
 def staticpayload():
 
