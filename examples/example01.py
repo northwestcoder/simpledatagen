@@ -40,7 +40,7 @@ def createData(headers: bool, rows: int, buildtransactions: bool, *args) -> str:
 		listOfNewRows += newline
 
 	# if asked for transactions (child records) we print out their headers
-	if buildtransactions:
+	if buildtransactions & headers:
 		for idx, item in enumerate(transactions.transColumnData):
 			listOfNewTransactions += quote + item + quote
 			if idx+1 != len(transactions.transColumnData):
