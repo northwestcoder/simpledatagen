@@ -3,7 +3,23 @@ import datetime
 import string
 import os
 
-# does two things: 1. creates an identity bundle, 2. creates a geolocation bundle
+# this file does a few things 
+# 1. creates an identity bundle, 
+# 2. creates a geolocation bundle, 
+# 3. load a bunch of input/seed data into memory
+# 4. load some handlers into a handler map
+
+for filename in os.listdir("inputs"):
+	#first, if we want current dates, regen this file prior to loading into memory
+	if filename.endswith(".csv") or filename.endswith(".txt"): 
+		arrayname = os.path.join(filename[:-4])
+		globals()["df_"+arrayname] = 0
+		with open("inputs/" + filename, "r") as file:
+			globals()["df_"+arrayname] = file.read().split('\n')
+			file.close()
+	else:
+		continue
+
 
 CoreDataColumns = [
 'customer_id',
@@ -30,16 +46,6 @@ handlers = {
 		}
 
 
-for filename in os.listdir("inputs"):
-	#first, if we want current dates, regen this file prior to loading into memory
-	if filename.endswith(".csv") or filename.endswith(".txt"): 
-		arrayname = os.path.join(filename[:-4])
-		globals()["df_"+arrayname] = 0
-		with open("inputs/" + filename, "r") as file:
-			globals()["df_"+arrayname] = file.read().split('\n')
-			file.close()
-	else:
-		continue
 
 def randomlySelected(chanceof, range):
 	# e.g. if 6 out of 13 chance odds
@@ -127,14 +133,10 @@ def handlerMap(type):
 
 #test = handlerMap("customer_id")
 #print(test)
-
 #test2 = handlerMap("identity_bundle")
 #print(test2)
-
-
 #test3 = handlerMap("geolocation_bundle")
 #print(test3)
-
 #test = randomlySelected(6, 13)
 #print(test)
 

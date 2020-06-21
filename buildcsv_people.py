@@ -1,6 +1,7 @@
 import core
 import helpers
-import transactions
+
+import buildcsv_transactions
 
 
 quote				= "\""
@@ -41,9 +42,9 @@ def createData(headers: bool, rows: int, buildtransactions: bool, *args) -> str:
 
 	# if asked for transactions (child records) we print out their headers
 	if buildtransactions & headers:
-		for idx, item in enumerate(transactions.transColumnData):
+		for idx, item in enumerate(buildcsv_transactions.transColumnData):
 			listOfNewTransactions += quote + item + quote
-			if idx+1 != len(transactions.transColumnData):
+			if idx+1 != len(buildcsv_transactions.transColumnData):
 				listOfNewTransactions += comma
 		listOfNewTransactions += newline		
 
@@ -81,7 +82,7 @@ def createData(headers: bool, rows: int, buildtransactions: bool, *args) -> str:
 		# if transactions were requested, we do that here
 		if buildtransactions:
 			maxrows = int(args[0])
-			listOfNewTransactions += transactions.generateTransactions(newid, maxrows)
+			listOfNewTransactions += buildcsv_transactions.generateTransactions(newid, maxrows)
 
 		rowcount+=1
 

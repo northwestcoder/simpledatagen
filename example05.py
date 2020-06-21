@@ -1,5 +1,5 @@
 import time
-import example01
+import buildcsv_people
 
 
 # let's use a low tech timer to see how long the data gen takes
@@ -14,7 +14,7 @@ for i in range(iterations):
 	if i == 0:
 
 		args = (True, batchsize, True, 5)
-		test = example01.createData(*args)
+		test = buildcsv_people.createData(*args)
 		with open('customers.csv', 'w') as f:
 			f.write(test[0])
 		with open('customers_transactions.csv', 'w') as f:
@@ -23,7 +23,7 @@ for i in range(iterations):
 	# no column headers
 	else:
 		args = (False, batchsize, True, 5)
-		test = example01.createData(*args)
+		test = buildcsv_people.createData(*args)
 		with open('customers.csv', 'a') as f:
 			f.write(test[0])
 		with open('customers_transactions.csv', 'a') as f:

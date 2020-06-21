@@ -20,17 +20,17 @@
 
 from flask import Flask
 
-import example01
+import buildcsv_people
 
 app = Flask(__name__)
 
-staticdata = example01.createData(headers=True, rows=1000, buildtransactions=False)
+staticdata = buildcsv_people.createData(headers=True, rows=1000, buildtransactions=False)
 
 # this next route generates a var each time the route is called
 @app.route('/randompayload')
 def randompayload():
 
-	payload = example01.createData(headers=True, rows=1000, buildtransactions=False)
+	payload = buildcsv_people.createData(headers=True, rows=1000, buildtransactions=False)
 	return payload
 
 
