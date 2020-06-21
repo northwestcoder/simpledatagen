@@ -12,3 +12,7 @@ For instance, in example02.py we call into example01 and specify a row count and
 ## example03.py
 
 Using flask (you will need to _pip install flask_ in your python environment), we create two simple endpoints "/staticpayload" and "/randompayload" - which will both autogenerate 1,000 lines of fake data by calling example01. For the static endpoint, the data is generated once per lifetime of the flask run. For the random endpoint, each refresh / page call to the endpoint will regen the data.
+
+## example04.py
+
+If you were looking closely at our original createData() definition, you may have noticed a "buildtransactions" boolean flag. Example04 shows this in action. When you run this example, we output two csv files, one for customers and a second with transactions for them, using the customer ID to seed a random set of transactions (random from 1 to 10 transactions per customer).

@@ -3,15 +3,30 @@ import random
 import datetime 
 
 import helpers
+import transactions
 
-
-DataColumns = ['customer_id','name_prefix','name_first','name_last','gender','email',
-'account_status','addr_ln_1_txt','city','state','postal_code','birth_dt','employment','job_title','phone']
+DataColumns = [
+'customer_id',
+'name_prefix',
+'name_first',
+'name_last',
+'gender',
+'email',
+'account_status',
+'addr_ln_1_txt',
+'city',
+'state',
+'postal_code',
+'birth_dt',
+'employment',
+'job_title',
+'phone']
 
 ## Do not recommend changing anything below this line?? maybe?
 
 quote = "\""
 quotecomma = "\","
+newline = "\n"
 
 birthday_start_date = datetime.date.today() - datetime.timedelta(days=27300)
 birthday_end_date = datetime.date.today() - datetime.timedelta(days=5096)
@@ -19,23 +34,33 @@ time_between_dates = birthday_end_date - birthday_start_date
 birthday_days_between_dates = time_between_dates.days
 
 
-def createData(headers: bool, rows: int, transactions: bool) -> str:
+def createData(headers: bool, rows: int, buildtransactions: bool) -> str:
 
 	listOfNewRows = ""
+	listOfNewTransactions = ""
 
 	if headers:
 		for idx, item in enumerate(DataColumns):
 			listOfNewRows+=quote + item + quote
 			if idx+1 != len(DataColumns):
 				listOfNewRows+=","
-		listOfNewRows+="\n"		
+		listOfNewRows+="\n"
+
+
+	if buildtransactions:
+		for idx, item in enumerate(transactions.transColumnData):
+			listOfNewTransactions += quote + item + quote
+			if idx+1 != len(transactions.transColumnData):
+				listOfNewTransactions += ","
+		listOfNewTransactions += "\n"		
 
 	rowcount = 0
 	for newrow in range(rows):
 		
 		#our temp row array for append
+		newid = helpers.id_generator()
 		newrow = ""
-		newrow+= quote + (helpers.id_generator()) + quotecomma
+		newrow+= quote + newid + quotecomma
 		
 		tempEmployer = random.choice(helpers.df_companies)
 		# some squirrel to create gender based names
@@ -77,13 +102,26 @@ def createData(headers: bool, rows: int, transactions: bool) -> str:
 		newrow+= quote + (random.choice(helpers.df_phones)) + quote
 		
 		if rowcount != rows:			
-			newrow+=("\n")
-		listOfNewRows+=newrow
+			newrow+= newline
 		
+		listOfNewRows+= newrow
+
+		# if transactions were requested, we do that here
+		listOfNewTransactions += transactions.generateTransactions(newid, 10)
+
+
+
 		rowcount+=1
 
-	return listOfNewRows
+	return listOfNewRows, listOfNewTransactions
 
 
-#test = createData(true, 1000, false)
-#print(test)
+
+
+#test = createData(True, 10, False)
+
+# some customers
+#print(test[0])
+
+# and their transactions
+#print(test[1])

@@ -25,12 +25,12 @@ import example01
 app = Flask(__name__)
 
 
-staticdata = example01.createData(headers=True, rows=1000, transactions=False)
+staticdata = example01.createData(headers=True, rows=1000, buildtransactions=False)
 
 @app.route('/randompayload')
 def randompayload():
 
-	payload = example01.createData(headers=True, rows=1000, transactions=False)
+	payload = example01.createData(headers=True, rows=1000, buildtransactions=False)
 	return payload
 
 
