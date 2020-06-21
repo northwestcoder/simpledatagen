@@ -8,7 +8,7 @@ t_start = time.time()
 test = example01.createData(headers=True, rows=1000, buildtransactions=False)
 
 with open('output.csv', 'w') as f:
-	f.write(test)
+	f.write(test[0])
 	print("finished")
 
 t_end = time.time()

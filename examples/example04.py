@@ -12,7 +12,8 @@ import time
 # let's use a low tech timer to see how long the data gen takes
 t_start = time.time()
 
-test = example01.createData(headers=True, rows=10000, buildtransactions=True)
+args = (True, 300, True, 2000)
+test = example01.createData(*args)
 
 with open('customers.csv', 'w') as f:
 	f.write(test[0])

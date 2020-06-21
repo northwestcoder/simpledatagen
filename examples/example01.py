@@ -34,7 +34,9 @@ time_between_dates = birthday_end_date - birthday_start_date
 birthday_days_between_dates = time_between_dates.days
 
 
-def createData(headers: bool, rows: int, buildtransactions: bool) -> str:
+def createData(headers: bool, rows: int, buildtransactions: bool, *args) -> str:
+
+
 
 	listOfNewRows = ""
 	listOfNewTransactions = ""
@@ -71,14 +73,14 @@ def createData(headers: bool, rows: int, buildtransactions: bool) -> str:
 			newrow+= quote + (random.choice(helpers.df_prefix_female)) + quotecomma
 			newrow+= quote + (tempFirstName) + quotecomma
 			newrow+=( quote + tempLastName) + quotecomma
-			newrow+= quote + ("F") + ","
+			newrow+= quote + ("F") + "," + quotecomma
 		else:
 			tempFirstName = random.choice(helpers.df_firstnames_male) + str(random.randint(100,999)-1)
 			tempLastName = random.choice(helpers.df_lastnames) + str(random.randint(100,999)-1)
 			newrow+= quote + (random.choice(helpers.df_prefix_male)) + quotecomma
 			newrow+= quote + (tempFirstName) + quotecomma
 			newrow+= quote + (tempLastName) + quotecomma
-			newrow+= quote + ("M") + ","
+			newrow+= quote + ("M") + "," + quotecomma
 		
 		tempEmail = helpers.genEmail(tempFirstName, tempLastName, tempEmployer)
 		
@@ -107,7 +109,9 @@ def createData(headers: bool, rows: int, buildtransactions: bool) -> str:
 		listOfNewRows+= newrow
 
 		# if transactions were requested, we do that here
-		listOfNewTransactions += transactions.generateTransactions(newid, 10)
+		if buildtransactions:
+			maxrows = int(args[0])
+			listOfNewTransactions += transactions.generateTransactions(newid, maxrows)
 
 
 
@@ -118,10 +122,10 @@ def createData(headers: bool, rows: int, buildtransactions: bool) -> str:
 
 
 
-#test = createData(True, 10, False)
+#test = createData(True, 10, True, 422)
 
 # some customers
-#print(test[0])
+#print(test[1])
 
 # and their transactions
 #print(test[1])
