@@ -1,6 +1,4 @@
 import time
-import os
-
 import buildcsv_people
 
 

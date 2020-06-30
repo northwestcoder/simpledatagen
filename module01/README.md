@@ -1,6 +1,13 @@
 # simpledatagen - lightweight data generator for various uses
 
-Text inputs for various random data are in the 'inputs' dir. Some exampleNN.py files have commented tests at the bottom, e.g. uncomment and run "python example04.py" at the command line
+Text inputs for various random data are in the 'inputs' dir. Some exampleNN.py files have commented tests at the bottom, e.g. uncomment and run "python example04.py" at the command line.
+
+We've tried to eliminate all possible 3rd party modules, these examples run with only:
+import random
+import datetime
+import time
+import string
+import os
 
 ## [buildcsv_people.py](https://github.com/northwestcoder/simpledatagen/blob/master/buildcsv_people.py)
 
@@ -10,7 +17,7 @@ If you dig in, you'll see that we have two types of data: "core" data and "extra
 
 ## [example02.py](https://github.com/northwestcoder/simpledatagen/blob/master/example02.py)
 
-For instance, in example02.py we call into example01 and specify a row count and headers. You can start to imagine iterating for all kinds of performance reasons, and not wanting the headers on the 2nd or Nth call.
+For instance, in example02.py we call into buildcsv_people.py and specify a row count and headers. You can start to imagine iterating for all kinds of performance reasons, and not wanting the headers on the 2nd or Nth call.
 
 ## [example03.py](https://github.com/northwestcoder/simpledatagen/blob/master/example03.py)
 

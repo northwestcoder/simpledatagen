@@ -12,15 +12,20 @@
 # it will then say
 # "Running on http://127.0.0.1:5000/"
 # 
-# and if you go to http://127.0.0.1:5000/randompayload
+# and if you go to 
+#
+# http://127.0.0.1:5000/randompayload
+# or
+# http://127.0.0.1:5000/staticpayload
+#
 # you should see 1,000 lines of randomly generated data
 #
 # each time you refresh the page the data will be rebuilt :) 
 
 
 from flask import Flask
-
 import buildcsv_people
+
 
 app = Flask(__name__)
 
